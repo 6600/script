@@ -10,7 +10,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // for (const type of ['chrome', 'node', 'electron']) {
   //   replaceText(`${type}-version`, process.versions[type])
   // }
-
+  window.alert = function (text) {
+    console.log(text)
+  }
   function selectVideo () {
     const menuList = child.document.querySelectorAll('#Menu li a')
     let canNext = true
@@ -46,7 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
             var video = child.document.querySelector('video')
             if (video && video.currentTime > 0) {
               var bili = video.currentTime / video.duration
-              if (bili > 0.8) {
+              if (bili > 0.51) {
                 selectVideo()
               }
             }
