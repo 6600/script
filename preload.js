@@ -84,7 +84,10 @@ window.addEventListener('DOMContentLoaded', () => {
             }
           }
           // 学时申请
-          child.document.querySelector('input[value="申请学时"]').click()
+          if (child.document.querySelector('input[value="申请学时"]')) {
+            child.document.querySelector('input[value="申请学时"]').click()
+          }
+          
           setTimeout(() => {
             child.document.querySelector('input[value="返回"]').click()
           }, 100);
