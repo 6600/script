@@ -1,11 +1,11 @@
 {
-  "name": "electron-quick-start",
+  "name": "script",
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder"
+    "build": "electron-builder --dir"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -23,5 +23,19 @@
   },
   "dependencies": {
     
+  },
+  "build": {  
+    "appId": "com.puge.script",
+    "copyright":"LEON",
+    "productName":"脚本助手",
+    "extraResources": [
+      {
+        "from": "./resources/icon.png",
+        "to": "./icon.png"
+      }
+    ],
+    "win": {  
+      "icon": "resources/icon.ico"
+    }  
   }
 }
