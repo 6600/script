@@ -7,6 +7,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1300,
     height: 800,
+    autoHideMenuBar: true,
     icon: "./resources/icon.png",
     webPreferences: {
       nodeIntegration: true,
@@ -44,7 +45,11 @@ app.on('window-all-closed', function () {
 
 let configInfo = null
 ipcMain.on('login', (event, arg) => {
-  data = JSON.parse(arg.data)
+  data = arg.data
+  if (typeof data == 'string') {
+    data = JSON.parse(arg.data)
+  }
+  
   configInfo = data
   mainWindow.loadURL(data.url)
 })
