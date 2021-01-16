@@ -1,11 +1,12 @@
 {
-  "name": "script",
+  "name": "script-tool",
   "version": "1.0.1",
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --dir"
+    "build": "electron-builder --dir",
+    "pack": "electron-builder"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -22,20 +23,37 @@
     "electron-builder": "^22.9.1"
   },
   "dependencies": {
-    
   },
-  "build": {  
+  "build": {
     "appId": "com.puge.script",
-    "copyright":"LEON",
-    "productName":"脚本助手",
+    "copyright": "LEON",
+    "productName": "脚本助手",
     "extraResources": [
       {
         "from": "./resources/icon.png",
         "to": "./icon.png"
       }
     ],
-    "win": {  
-      "icon": "resources/icon.ico"
-    }  
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./resources/icon.ico",
+      "uninstallerIcon":"./resources/icon.ico",
+      "installerHeaderIcon": "./resources/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "win": {
+      "icon": "resources/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
   }
 }
