@@ -35,7 +35,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // 获取数据
   console.log('获取数据!')
   ipcRenderer.on('getInfo-reply', (event, arg) => {
-    console.log(arg) // prints "pong"
     if (!arg) return
     if (arg.html) {
       var insertElement = document.createElement("div");
@@ -47,11 +46,6 @@ window.addEventListener('DOMContentLoaded', () => {
       addScr(arg.js)
     }
   })
-  
+  // 获取用户数据
   ipcRenderer.send('getInfo', 'ping')
-  // setTimeout(() => {
-  //   addScr()
-  //   addCssByLink()
-  //   document.querySelector('.neirong-text').value = window.location.href
-  // }, 0);
 })

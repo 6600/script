@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain, session} = require('electron')
 const path = require('path')
 let mainWindow = null
 function createWindow () {
@@ -11,16 +11,21 @@ function createWindow () {
     icon: "./resources/icon.png",
     webPreferences: {
       nodeIntegration: true,
+      nodeIntegrationInWorker: true,
+      nodeIntegrationInSubFrames: true,
+      // 关闭同源策略
+      webSecurity: true,
+      allowRunningInsecureContent: true,
+      contextIsolation: false,
       preload: path.join(__dirname, 'preload.js')
     }
   })
 
-  // and load the index.html of the app.
-  // mainWindow.loadURL('https://hsaq.100anquan.com/index')
-  mainWindow.loadFile('./enter/index.html')
+  // mainWindow.loadFile('./enter/index.html')
+  mainWindow.loadFile('./test/index.html')
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -44,6 +49,7 @@ app.on('window-all-closed', function () {
 })
 
 let configInfo = null
+// 登录事件
 ipcMain.on('login', (event, arg) => {
   data = arg.data
   if (typeof data == 'string') {
@@ -56,6 +62,26 @@ ipcMain.on('login', (event, arg) => {
 
 ipcMain.on('getInfo', (event, arg) => {
   event.reply('getInfo-reply', configInfo)
+})
+
+ipcMain.on('creatNewWindow', (event, arg) => {
+  console.log(arg)
+  let presWindow = new BrowserWindow({
+    width: 1280,
+    height: 768,
+    title:'用户登陆',
+    webPreferences: {
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true,
+      nodeIntegrationInSubFrames: true,
+      webSecurity: false,
+      allowRunningInsecureContent: true,
+      contextIsolation: false,
+      session: session.fromPartition('persist:bv1Session', { cache: false })
+    }
+  });
+  presWindow.loadURL('https://cc.163.com/user/rank_list/')
+  event.reply('windowList', [])
 })
 
 // In this file you can include the rest of your app's specific main process
