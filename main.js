@@ -21,11 +21,11 @@ function createWindow () {
     }
   })
 
-  // mainWindow.loadFile('./enter/index.html')
-  mainWindow.loadFile('./test/index.html')
+  mainWindow.loadFile('./enter/index.html')
+  // mainWindow.loadFile('./test/index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -50,17 +50,21 @@ app.on('window-all-closed', function () {
 
 let configInfo = null
 // 登录事件
-ipcMain.on('login', (event, arg) => {
-  data = arg.data
+ipcMain.on('login', (event, temp) => {
   if (typeof data == 'string') {
-    data = JSON.parse(arg.data)
+    temp.data = JSON.parse(temp.data)
+  }
+  if (typeof temp.data.data == 'string') {
+    temp.data.data = JSON.parse(temp.data.data)
   }
   
-  configInfo = data
-  mainWindow.loadURL(data.url)
+  configInfo = temp
+  console.log(`login: ${JSON.stringify(temp)}`)
+  mainWindow.loadURL(temp.data.url)
 })
 
 ipcMain.on('getInfo', (event, arg) => {
+  console.log(`send user data: ${JSON.stringify(configInfo)}`)
   event.reply('getInfo-reply', configInfo)
 })
 

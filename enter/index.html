@@ -92,7 +92,6 @@
       } // getDataFormSession(owo.state.userInfo.username, owo.state.userInfo.session)
 
     }
-
     function getDataFormSession(username, session) {
       fetch("http://going.run/userServer?route=loginSession", {
         method: 'POST',
@@ -115,7 +114,7 @@
           if (owo.event.login) {
             owo.event.login(res.data);
           }
-          ipcRenderer.sendSync('login', res.data);
+          ipcRenderer.send('login', res.data);
         } else {
           owo.go('login');
           owo.tool.toast(res.message);
@@ -184,7 +183,7 @@
 
               owo.state.userInfo = res.data;
               localStorage.setItem('owoUserInfo_' + appType, JSON.stringify(res.data));
-              ipcRenderer.sendSync('login', res.data);
+              ipcRenderer.send('login', res.data);
             } else {
               toast(res.message);
             }
