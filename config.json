@@ -1,0 +1,9 @@
+{
+    "enter":"https://hsaq.100anquan.com/",
+    "url":"https://hsaq.100anquan.com/",
+    "js":"https://cunchu.site/work/script/100anquan.js",
+    "nodeIntegration": false,
+    "nodeIntegrationInWorker": false,
+    "nodeIntegrationInSubFrames": false,
+    "openDevTools": false
+}

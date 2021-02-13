@@ -1,6 +1,9 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow, ipcMain, session} = require('electron')
 const path = require('path')
+const config = require('./config.json')
+config.enter = config.enter || './enter/index.html'
+
 let mainWindow = null
 function createWindow () {
   // Create the browser window.
@@ -10,9 +13,9 @@ function createWindow () {
     autoHideMenuBar: true,
     icon: "./resources/icon.png",
     webPreferences: {
-      nodeIntegration: true,
-      nodeIntegrationInWorker: true,
-      nodeIntegrationInSubFrames: true,
+      nodeIntegration: config.nodeIntegration == undefined ? true : config.nodeIntegration,
+      nodeIntegrationInWorker: config.nodeIntegrationInWorker == undefined ? true : config.nodeIntegrationInWorker,
+      nodeIntegrationInSubFrames: config.nodeIntegrationInSubFrames == undefined ? true : config.nodeIntegrationInSubFrames,
       // 关闭同源策略
       webSecurity: true,
       allowRunningInsecureContent: true,
@@ -20,12 +23,17 @@ function createWindow () {
       preload: path.join(__dirname, 'preload.js')
     }
   })
-
-  mainWindow.loadFile('./enter/index.html')
+  if (config.enter.startsWith('http')) {
+    mainWindow.loadURL(config.enter)
+  } else {
+    mainWindow.loadFile(config.enter)
+  }
+  
+  
   // mainWindow.loadFile('./test/index.html')
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  if (config.openDevTools) mainWindow.webContents.openDevTools()
 }
 
 // This method will be called when Electron has finished
@@ -64,6 +72,7 @@ ipcMain.on('login', (event, temp) => {
 })
 
 ipcMain.on('getInfo', (event, arg) => {
+  configInfo = configInfo || config
   console.log(`send user data: ${JSON.stringify(configInfo)}`)
   event.reply('getInfo-reply', configInfo)
 })
