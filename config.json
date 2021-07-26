@@ -5,5 +5,5 @@
     "nodeIntegration": false,
     "nodeIntegrationInWorker": false,
     "nodeIntegrationInSubFrames": false,
-    "openDevTools": false
+    "openDevTools": true
 }
