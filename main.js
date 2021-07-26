@@ -1,7 +1,8 @@
 // Modules to control application life and create native browser window
+const fs = require('fs')
 const {app, BrowserWindow, ipcMain, session} = require('electron')
 const path = require('path')
-const config = require('./config.json')
+const config = fs.readFileSync('./config.json')
 config.enter = config.enter || './enter/index.html'
 
 let mainWindow = null
