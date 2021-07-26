@@ -53,6 +53,10 @@
           ]
         }
       ]
+    },
+    "mac": {
+      "category": "public.app-category.video",
+      "type": "development"
     }
   }
 }
