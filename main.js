@@ -2,8 +2,8 @@
 const fs = require('fs')
 const {app, BrowserWindow, ipcMain, session} = require('electron')
 const path = require('path')
-const config = fs.readFileSync('./config.json')
-config.enter = config.enter || './enter/index.html'
+const config = JSON.parse(fs.readFileSync('./config.json'))
+config.enter = config.enter
 
 let mainWindow = null
 function createWindow () {
